@@ -21,6 +21,7 @@ export function App() {
 }
 
 
+
 function Shirt(props) {
   const snap = useSnapshot(state)
 
@@ -29,7 +30,10 @@ function Shirt(props) {
 
   const shirtRef = useRef()
 
-t
+ 
+
+
+
   let {viewport} = useThree()
     console.log(viewport)
 
