@@ -3,8 +3,9 @@ import './App.css'
 import { useEffect, useRef } from 'react'
 import { useSnapshot } from 'valtio'
 import { state } from './store.js'
-import { useFrame } from '@react-three/fiber'
-import { easing } from 'maath'
+import { useFrame, useThree } from '@react-three/fiber'
+import { easing, vector3 } from 'maath'
+import { Vector3 } from 'three'
 
 export function App() {
   return <>
@@ -27,18 +28,38 @@ function Shirt(props) {
   const { nodes, materials } = useGLTF('/shirt_baked_collapsed.glb')
 
   const shirtRef = useRef()
+
   useEffect(
     () => {
       shirtRef.current.rotation.y = -0.3
-      shirtRef.current.rotation.x = -0.1
+      shirtRef.current.rotation.x = -0.1;
+      console.log(viewport.getCurrentViewport())
     },[]      
   )
-  useFrame((state, delta) =>
-    easing.dampC(materials.lambert1.color, snap.selectedColor, 0.25, delta)
+  let {viewport} = useThree()
+    console.log(viewport)
+
+  useFrame((state, delta) =>{
+
+    let current = viewport.getCurrentViewport()
+    if (current.width > 1.5){
+      let power = 1.1;
+      shirtRef.current.scale.set( power, power, power )
+    }
+    else {
+      shirtRef.current.scale.set( 0.8, 0.8, 0.8 )
+    }
+
+    easing.dampC(
+      materials.lambert1.color,
+      snap.selectedColor, 
+      0.25, 
+      delta)}
   )
 
   return (
     <mesh
+    scale={0.9}
       ref = { shirtRef}
       castShadow
       geometry={nodes.T_Shirt_male.geometry}
