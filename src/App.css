@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,200;0,600;1,900&display=swap');
+@import url('https://rsms.me/inter/inter.css');
+
+html {
+  font-family: 'Inter', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root,
+#main {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  user-select: none;
+}
+
+body {
+  background: #f0f0f0;
+  font-family: 'Inter', sans-serif;
+}
+
+
+/* INTRO */
+
+#wrapper {
+  z-index: 10;
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#header-Logo {
+  position: absolute;
+  top:0; left: 0;
+  margin: 10px;
+}
+
+#intro {
+  position:relative;
+  width: 100%; height: 90%;
+  max-width: 500px; max-height: 900px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#intro h1 {
+  color: rgba(0, 0, 0, 0.75);
+  font-weight: 900;
+  font-size: 16vh;
+  letter-spacing: -6px;
+  font-style: italic;
+  width: 50%;
+  line-height: 15vh;
+  font-family: 'Nunito Sans', sans-serif;
+  margin:0px;
+  margin-left: 5px;
+}
+#intro > p {
+  width: 100%;
+  max-width: 350px;
+  align-self: flex-start;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  padding: 9px 12px;
+}
+
+#intro button {
+  font-size: 2.2vh;
+  align-self: flex-end;
+  font-style: italic;
+  font-family: 'Nunito Sans', sans-serif;
+  padding: 5px 12px 8px;
+  margin: 10px;
+  border-radius: 15px;
+  border: none;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  opacity: 0.8;
+}
+button:hover{
+  opacity: 1;
+}
+
+/* CUSTOM */
+#custom {
+  position: absolute;
+  width: 100%; height: 90%;
+  max-width: 500px; max-height: 900px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-end ;
+}
+
+.options-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center ;
+  gap: 5px;
+}
+
+.options{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap:5px;
+  margin: 5px;
+}
+
+.color-options {
+}
+
+.circle {
+  width: 35px; height: 35px;
+  opacity: 0.8;
+  border: rgba(255, 255, 255, 0.5) 2px solid;
+  border-radius: 15px;
+  margin: 2px;
+  transition: all ease-in-out 0.2s;
+}
+.circle:hover {
+  scale: 1.2;
+  transition: all ease-in-out 0.2s;
+}
+
+#decals {
+  background-color: rgba(0, 0, 0, 0.1);
+  padding: 10px 3px 3px;
+  border-radius: 5px;
+}
+
+.decal img {
+  scale:0.9;
+  max-width: 40px;
+  transition: all ease-in-out 0.2s;
+}
+.decal:hover img {
+  scale:1;
+  transition: all ease-in-out 0.2s;
+}
+
+.exit {
+  position: absolute;
+  top: 0; right: 0;
+  margin: 10px;
+  transition: all ease-in-out 0.2s;
+  width: 40px; height: 40px;
+  border-radius: 15px;
+  border: none;
+  text-align: center;
+}
+
+.negative {
+  color: white;
+  background: rgba(0, 0, 0, 0.9);
+  transition: all ease-in-out 0.2s;
+}
