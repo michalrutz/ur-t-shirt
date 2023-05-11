@@ -1,8 +1,6 @@
-import { AccumulativeShadows, Center, Decal, Environment, Float, RandomizedLight, useGLTF, useHelper, useTexture } from '@react-three/drei'
+import { AccumulativeShadows, Center, Decal, Environment, RandomizedLight, useGLTF, useTexture } from '@react-three/drei'
 import './App.css'
-import { DoubleSide, SpotLightHelper } from 'three'
 import { useEffect, useRef } from 'react'
-import { useControls } from 'leva'
 import { useSnapshot } from 'valtio'
 import { state } from './store.js'
 import { useFrame } from '@react-three/fiber'
@@ -12,9 +10,11 @@ export function App() {
   return <>
     <Lights/>
     <Environment preset="city" />
-    <Center>
-      <Shirt/>
-    </Center>
+    <CameraRig>
+      <Center>
+        <Shirt/>
+      </Center>
+    </CameraRig>
     <AccShadows/>
   </>
 }
@@ -58,19 +58,26 @@ function Shirt(props) {
   )
 }
 
-function Backdrop (params) {
-  return (
-    <mesh
-      position = {[0,0,-0.2]} 
-      receiveShadow
-    >
-      <planeGeometry/>
-      <meshStandardMaterial 
-        color = {"whitesmoke"}
-      />
-    </mesh>
-  )
+function CameraRig({ children }) {
+  const group = useRef()
+
+  useFrame((state, delta) => {
+    easing.damp3(
+      state.camera.position,
+      state.camera.position,
+      0.25,
+      delta
+    )
+    easing.dampE(
+      group.current.rotation,
+      group.current.rotation,
+      0.25,
+      delta
+    )
+  })
+  return <group ref={group}>{children}</group>
 }
+
 function AccShadows() {
   const shadows = useRef()
 
@@ -116,5 +123,5 @@ function Lights () {
   </>
 }
 
-useGLTF.preload('/shirt_baked.glb')
-useTexture.preload('/react.png')
+useGLTF.preload('/shirt_baked_collapsed.glb');
+[ '/react.png', '/threejs.png' ].forEach(useTexture.preload)
