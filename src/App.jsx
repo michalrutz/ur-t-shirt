@@ -29,13 +29,7 @@ function Shirt(props) {
 
   const shirtRef = useRef()
 
-  useEffect(
-    () => {
-      shirtRef.current.rotation.y = -0.3
-      shirtRef.current.rotation.x = -0.1;
-      console.log(viewport.getCurrentViewport())
-    },[]      
-  )
+t
   let {viewport} = useThree()
     console.log(viewport)
 
@@ -56,6 +50,8 @@ function Shirt(props) {
       0.25, 
       delta)}
   )
+
+
 
   return (
     <mesh
