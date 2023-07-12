@@ -1,25 +1,28 @@
-import { AccumulativeShadows, Center, Decal, Environment, RandomizedLight, useGLTF, useTexture } from '@react-three/drei'
+import { AccumulativeShadows, Center, ContactShadows, Decal, Environment, PresentationControls, RandomizedLight, useGLTF, useTexture } from '@react-three/drei'
 import './App.css'
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { useSnapshot } from 'valtio'
 import { state } from './store.js'
 import { useFrame, useThree } from '@react-three/fiber'
-import { easing, vector3 } from 'maath'
-import { Vector3 } from 'three'
+import { easing } from 'maath'
 
 export function App() {
+  const snap = useSnapshot(state)
+
   return <>
     <Lights/>
-    <Environment preset="city" />
-    <CameraRig>
-      <Center>
-        <Shirt/>
-      </Center>
-    </CameraRig>
-    <AccShadows/>
+        <PresentationControls 
+          global snap rotation = { [0, 0, 0] } 
+          azimuth = { [-1, 1] }
+          polar   = { [-0.2, 0.2] }
+          config  = { {mass: 5, tension: 200, friction: 30} }
+        >
+          <Shirt/>
+          <AccShadows/>      
+
+        </PresentationControls>
   </>
 }
-
 
 
 function Shirt(props) {
@@ -30,14 +33,12 @@ function Shirt(props) {
 
   const shirtRef = useRef()
 
- 
-
-
-
   let {viewport} = useThree()
     console.log(viewport)
 
   useFrame((state, delta) =>{
+
+    easing.dampE( shirtRef.current.rotation , [0, snap.selectedRotation , 0 ] , 0.25, delta )
 
     let current = viewport.getCurrentViewport()
     if (current.width > 1.5){
@@ -56,17 +57,21 @@ function Shirt(props) {
   )
 
 
-
   return (
     <mesh
-    scale={0.9}
+      scale={0.9}
+      position-y = {0.05}
+      rotation={[0, 120, 0]}
       ref = { shirtRef}
       castShadow
       geometry={nodes.T_Shirt_male.geometry}
       material={materials.lambert1}
       material-roughness={1}
       {...props}
-      dispose={null}>
+      dispose={null}
+      onPointerEnter  = { () => { document.body.style.cursor = "grab" }}
+      onPointerOut    = { () => { document.body.style.cursor = "default" }}
+      >
       <Decal
         position={[0, 0.04, 0.15]}
         rotation={[0, 0, 0]}
@@ -102,19 +107,22 @@ function CameraRig({ children }) {
 function AccShadows() {
   const shadows = useRef()
 
-  useFrame((state, delta) =>
+  useFrame((state, delta) =>{
+    console.log(shadows.current.getMesh().geometry.parameters)
+    shadows.current.getMesh().geometry.parameters.width=1;
+    shadows.current.getMesh().geometry.parameters.widthSegments = 100;
+
     easing.dampC(
       shadows.current.getMesh().material.color,
       state.selectedColor,
       0.25,
       delta
     )
-  )
+  })
 
   return (
     <AccumulativeShadows
       ref={shadows}
-      temporal
       frames={60}
       alphaTest={0.85}
       scale={10}
@@ -138,9 +146,11 @@ function AccShadows() {
   )
 }
 
+
 function Lights () {
   return <>
-    <ambientLight intensity={0.5}/>
+    <ambientLight intensity={0.7}/>
+    <spotLight intensity={0.6}/>
   </>
 }
 

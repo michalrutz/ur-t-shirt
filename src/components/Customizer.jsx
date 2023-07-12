@@ -23,7 +23,10 @@ export function Customizer({ config, setIntro }) {
                       <div
                         key={decal}
                         className="decal"
-                        onClick={() => (state.selectedDecal = decal)}>
+                        onClick={() => {
+                          state.selectedDecal = decal;
+                        }
+                        }>
                         <img src={decal + '_thumb.png'} alt="brand" />
                       </div>
                     ))}

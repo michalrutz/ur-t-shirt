@@ -9,7 +9,7 @@ import { OrbitControls } from '@react-three/drei'
 import { Overlay } from './Overlay.jsx'
 
 const cameraSettings = { 
-  position:[0.3,0.2,1],
+  position:[0.25,0.2,1],
   fov: 45,
   near: 0.1,
   far: 10
@@ -23,14 +23,14 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       camera      = { cameraSettings }
       shadows
     >
-      <OrbitControls
+    {/* <OrbitControls
         minAzimuthAngle = {-Math.PI*0.1}
         maxAzimuthAngle = { Math.PI*0.1}
         maxPolarAngle   = { Math.PI*0.5 }
         minPolarAngle   = { Math.PI*0.5-0.5 }
         enablePan       = { false }
         enableZoom      = { false }
-      />
+      /> */}
       <App/>
     </Canvas>
     <Overlay />
